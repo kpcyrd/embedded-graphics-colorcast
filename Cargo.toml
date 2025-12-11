@@ -1,0 +1,11 @@
+[package]
+name = "embedded-graphics-colorcast"
+version = "0.1.0"
+description = "Color casting for embedded-graphics binary images"
+repository = "https://github.com/kpcyrd/embedded-graphics-colorcast"
+authors = ["kpcyrd <git@rxv.cc>"]
+license = "MIT OR Apache-2.0"
+edition = "2024"
+
+[dependencies]
+embedded-graphics = "0.8"
