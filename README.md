@@ -1,12 +1,15 @@
 # embedded-graphics-colorcast
 
-Color casting for [embedded-graphics] images.
+Color casting for [`embedded-graphics`] images.
 
 This crate provides an `Image` struct that wraps around an
 `ImageRaw<BinaryColor>` and allows rendering it to any draw target by mapping
 the binary colors to the target's color type.
 
-[embedded-graphics]: https://github.com/embedded-graphics/embedded-graphics
+It was originally developed for use with [`https://github.com/kpcyrd/embedded-mono-img`].
+
+[`embedded-graphics`]: https://github.com/embedded-graphics/embedded-graphics
+[`embedded-mono-img`]: https://github.com/kpcyrd/embedded-mono-img
 
 ```rust
 use embedded_graphics::{
