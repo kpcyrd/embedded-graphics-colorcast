@@ -36,11 +36,6 @@ let image = Image::new(&raw, Point::zero(), Rgb565::WHITE);
 image.draw(&mut display)?;
 ```
 
-## Caveats
-
-The `Image::draw` implementations sets individual pixels on the target one by
-one and does not use a draw_iter.
-
 ## Acknowledgements
 
 This repository contains trait implementations and documentation copied over

@@ -43,7 +43,7 @@ use embedded_graphics::{
     geometry::OriginDimensions,
     image::GetPixel,
     pixelcolor::BinaryColor,
-    prelude::{Dimensions, DrawTarget, PixelColor, Point, Transform},
+    prelude::{Dimensions, DrawTarget, PixelColor, Point, PointsIter, Transform},
     primitives::Rectangle,
 };
 
@@ -102,18 +102,13 @@ where
     where
         D: DrawTarget<Color = C>,
     {
-        let size = self.image.size();
-
-        for x in 0..size.width {
-            for y in 0..size.height {
-                let img_point = Point::new(x as i32, y as i32);
-                if self.image.pixel(img_point) == Some(BinaryColor::On) {
-                    Pixel(self.position + img_point, self.color).draw(target)?;
-                }
+        target.draw_iter(self.image.bounding_box().points().flat_map(|point| {
+            if self.image.pixel(point) == Some(BinaryColor::On) {
+                Some(Pixel(self.position + point, self.color))
+            } else {
+                None
             }
-        }
-
-        Ok(())
+        }))
     }
 }
 
