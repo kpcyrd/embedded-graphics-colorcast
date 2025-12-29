@@ -63,6 +63,7 @@ where
     image: &'a T,
     position: Point,
     color: C,
+    background: Option<C>,
 }
 
 impl<'a, T, C> Image<'a, T, C>
@@ -76,17 +77,20 @@ where
             image,
             position,
             color,
+            background: None,
         }
     }
 
     /// Create a new `Image` centered around a given point
     pub fn with_center(image: &'a T, center: Point, color: C) -> Self {
         let position = Rectangle::with_center(center, image.size()).top_left;
-        Self {
-            image,
-            position,
-            color,
-        }
+        Self::new(image, position, color)
+    }
+
+    /// Instead of transparent background, draw the background with given color
+    pub fn with_background(mut self, color: C) -> Self {
+        self.background = Some(color);
+        self
     }
 }
 
@@ -103,11 +107,15 @@ where
         D: DrawTarget<Color = C>,
     {
         target.draw_iter(self.image.bounding_box().points().flat_map(|point| {
-            if self.image.pixel(point) == Some(BinaryColor::On) {
-                Some(Pixel(self.position + point, self.color))
+            let color = if self.image.pixel(point) == Some(BinaryColor::On) {
+                self.color
+            } else if let Some(background) = self.background {
+                background
             } else {
-                None
-            }
+                return None;
+            };
+
+            Some(Pixel(self.position + point, color))
         }))
     }
 }
@@ -148,6 +156,7 @@ where
             image: self.image,
             position: self.position + by,
             color: self.color,
+            background: self.background,
         }
     }
 
