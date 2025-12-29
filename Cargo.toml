@@ -1,6 +1,6 @@
 [package]
 name = "embedded-graphics-colorcast"
-version = "0.1.0"
+version = "0.1.1"
 description = "Color casting for embedded-graphics binary images"
 repository = "https://github.com/kpcyrd/embedded-graphics-colorcast"
 authors = ["kpcyrd <git@rxv.cc>"]
